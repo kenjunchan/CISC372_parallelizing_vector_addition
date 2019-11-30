@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <omp.h>
 #include <time.h>
-
+#include <string.h> 
 
 #define VSIZE 10000000
 #define TESTSIZE 10
@@ -20,20 +20,25 @@ int main(int argc, char* argv[]){
     int lower = LOWER;
     int upper = UPPER;
 
-    printf("Beginning Vector Addition - Serial");
+    
     if(argc == 1){
-        printf("...\n");
     }
     else if(argc == 2){
-        printf(" for %d vectors... \n", atoi(argv[1]));
-        testsize = atoi(argv[1]);
+        testsize = TESTSIZE;
+        if(strcmp("max", strtok(argv[1], "\n"))){
+            testsize = VSIZE;
+        }
+        else{
+            testsize = atoi(argv[1]);
+        }
     }
+    
+    printf("Beginning Vector Addition - Serial, for %d vectors...\n", testsize);
 
     clock_t begin = clock();
     srand(time(0));
     //createAllFiles(VSIZE, UPPER, LOWER);
-    printf("Beginning Vector Addition - Serial...\n");
-    
+
     int myid, size;
     int i;
     int *X, *Y, *Z;
